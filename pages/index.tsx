@@ -6,9 +6,15 @@ export default function Home() {
   return (
     <Layout meta={{}}>
       <div className="container">
-        <TopFixBar />
-        <NowPlayingBar />
+        <div style={{ height: "300px" }}>Test Content</div>
+        <div style={{ height: "300px" }}>Test Content</div>
+        <div style={{ height: "300px" }}>Test Content</div>
       </div>
+      <style jsx>{`
+        .container {
+          height: 100%;
+        }
+      `}</style>
     </Layout>
   );
 }

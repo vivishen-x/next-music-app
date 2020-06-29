@@ -1,4 +1,7 @@
 import Head from "next/head";
+import TopFixBar from "./TopFixBar";
+import NowPlayingBar from "./NowPlayingBar";
+import LeftNavMenu from "./LeftNavMenu";
 
 type Props = {
   children: React.ReactNode;
@@ -23,7 +26,25 @@ export default function Layout({ children, meta }: Props) {
         <meta name="og:title" content={pageTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <main>{children}</main>
+      <main>
+        <TopFixBar />
+        <div className="layout-body">
+          <LeftNavMenu id={1} />
+          <div className="main-view">{children}</div>
+        </div>
+        <NowPlayingBar />
+      </main>
+      <style jsx>{`
+        .layout-body {
+          height: calc(100vh - 70px - 90px);
+          display: flex;
+        }
+        .main-view {
+          width: 100%;
+          height: 100%;
+          padding: 20px 30px;
+        }
+      `}</style>
     </div>
   );
 }
