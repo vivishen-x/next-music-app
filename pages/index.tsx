@@ -1,6 +1,7 @@
 import * as React from "react";
 import Layout from "../components/Layout";
 import { HotSearchListJson, fetchSearchHotList } from "../src/musicApi";
+import SearchKeywordLabel from "../components/SearchKeywordLabel";
 
 type Props = {};
 
@@ -38,7 +39,11 @@ export default class Home extends React.Component<Props, State> {
       <Layout meta={{}}>
         <div className="container">
           <h1 className="h1">热门搜索</h1>
-          <div className="top-recommend">Test Content</div>
+          <div className="top-recommend">
+            {hotSearchList.result.hots.map((hotSearch, index) => (
+              <SearchKeywordLabel key={index} keyword={hotSearch.first} />
+            ))}
+          </div>
           <h1 className="h1">推荐歌单</h1>
           <div className="top-recommend">Test Content</div>
           <h1 className="h1">最新音乐</h1>
@@ -57,7 +62,7 @@ export default class Home extends React.Component<Props, State> {
             margin: 10px 0;
           }
           .top-recommend {
-            height: 300px;
+            height: auto;
           }
         `}</style>
       </Layout>
