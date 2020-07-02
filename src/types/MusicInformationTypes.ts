@@ -38,3 +38,10 @@ export type ArtistInfoType = {
   picUrl: string | null;
   trans: string | null;
 };
+
+export type HotSearchType = {
+  first: string | null;
+  second: number | null;
+  third: null;
+  iconType: number;
+};

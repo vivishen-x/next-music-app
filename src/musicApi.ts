@@ -1,5 +1,5 @@
 import qs from "qs";
-import { SongInfoType } from "./types/MusicInformationTypes";
+import { SongInfoType, HotSearchType } from "./types/MusicInformationTypes";
 
 export type SearchResultJson = {
   result: {
@@ -8,8 +8,16 @@ export type SearchResultJson = {
   };
 };
 
+export type HotSearchListJson = {
+  result: {
+    hots: HotSearchType[];
+  };
+};
+
 // PORT = 8080
-const localNeteaseMusicUri = "http://localhost:8080/";
+const NETEASE_MUSIC_URI = "http://localhost:8080/";
+
+const searchApi = `${NETEASE_MUSIC_URI}search`;
 
 export async function searchMusicByKeyword(
   keywords: string
@@ -17,9 +25,21 @@ export async function searchMusicByKeyword(
   const query = qs.stringify({
     keywords
   });
-  const searchResultUrl = `${localNeteaseMusicUri}search?${query}`;
-  const searchResultJson: SearchResultJson = await fetch(
-    searchResultUrl
-  ).then(res => res.json());
+  const searchResultUrl = `${searchApi}?${query}`;
+  const searchResultJson: SearchResultJson = await fetch(searchResultUrl)
+    .then(res => res.json())
+    .catch(e => {
+      return null;
+    });
   return searchResultJson;
+}
+
+export async function fetchSearchHotList(): Promise<HotSearchListJson> {
+  const searchHotListUrl = `${searchApi}/hot`;
+  const hotListJson = await fetch(searchHotListUrl)
+    .then(res => res.json())
+    .catch(e => {
+      return null;
+    });
+  return hotListJson;
 }
