@@ -1,31 +1,33 @@
 import * as React from "react";
+import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
-import { HotSearchListJson, fetchSearchHotList } from "../src/musicApi";
+import {
+  HotSearchListJson,
+  fetchSearchHotList,
+  PersonalizedPlaylistJson,
+  fetchPersonalizedPlaylist
+} from "../src/musicApi";
 import SearchKeywordLabel from "../components/SearchKeywordLabel";
+import PlaylistsShow from "../components/PlaylistsShow";
 
-type Props = {};
-
-type State = {
+type Props = {
   hotSearchList: HotSearchListJson;
+  personalizedPlaylist: PersonalizedPlaylistJson;
 };
+
+type State = {};
 
 export default class Home extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      hotSearchList: { result: { hots: [] } }
-    };
+    this.state = {};
   }
 
-  async componentDidMount() {
-    const hotSearchList = await fetchSearchHotList();
-    this.setState({
-      hotSearchList
-    });
-  }
+  // async componentDidMount() {
+  // }
 
   render() {
-    const { hotSearchList } = this.state;
+    const { hotSearchList, personalizedPlaylist } = this.props;
 
     if (!hotSearchList)
       return (
@@ -45,7 +47,9 @@ export default class Home extends React.Component<Props, State> {
             ))}
           </div>
           <h1 className="h1">推荐歌单</h1>
-          <div className="top-recommend">Test Content</div>
+          <div className="top-recommend">
+            <PlaylistsShow playlists={personalizedPlaylist.result} />
+          </div>
           <h1 className="h1">最新音乐</h1>
           <div className="top-recommend">Test Content</div>
         </div>
@@ -69,3 +73,14 @@ export default class Home extends React.Component<Props, State> {
     );
   }
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const hotSearchList = await fetchSearchHotList();
+  const personalizedPlaylist = await fetchPersonalizedPlaylist();
+  return {
+    props: {
+      hotSearchList,
+      personalizedPlaylist
+    }
+  };
+};

@@ -1,5 +1,9 @@
 import qs from "qs";
-import { SongInfoType, HotSearchType } from "./types/MusicInformationTypes";
+import {
+  SongInfoType,
+  HotSearchType,
+  PlaylistType
+} from "./types/MusicInformationTypes";
 
 export type SearchResultJson = {
   result: {
@@ -14,10 +18,16 @@ export type HotSearchListJson = {
   };
 };
 
+export type PersonalizedPlaylistJson = {
+  result: PlaylistType[];
+};
+
 // PORT = 8080
 const NETEASE_MUSIC_URI = "http://localhost:8080/";
 
 const searchApi = `${NETEASE_MUSIC_URI}search`;
+
+const personalizedApi = `${NETEASE_MUSIC_URI}personalized`;
 
 export async function searchMusicByKeyword(
   keywords: string
@@ -42,4 +52,19 @@ export async function fetchSearchHotList(): Promise<HotSearchListJson> {
       return null;
     });
   return hotListJson;
+}
+
+export async function fetchPersonalizedPlaylist(
+  limit: number = 6
+): Promise<PersonalizedPlaylistJson> {
+  const query = qs.stringify({
+    limit
+  });
+  const personalizedUrl = `${personalizedApi}?${query}`;
+  const personalizedPlayListJson = await fetch(personalizedUrl)
+    .then(res => res.json())
+    .catch(e => {
+      return null;
+    });
+  return personalizedPlayListJson;
 }

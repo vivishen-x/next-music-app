@@ -45,3 +45,17 @@ export type HotSearchType = {
   third: null;
   iconType: number;
 };
+
+export type PlaylistType = {
+  id: number;
+  type: number;
+  name: string;
+  copywriter: string;
+  picUrl: string;
+  canDislike: boolean;
+  trackNumberUpdateTime: number;
+  playCount: number;
+  trackCount: number;
+  highQuality: boolean;
+  alg: string;
+};
