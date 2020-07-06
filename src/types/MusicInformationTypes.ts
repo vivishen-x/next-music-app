@@ -185,3 +185,23 @@ type MusicDataType = {
   playTime: number;
   volumeDelta: number;
 };
+
+export type MusicPlayerDataType = {
+  id: number;
+  url: string;
+  br: number;
+  size: number;
+  md5: string;
+  code: number;
+  expi: number;
+  type: string;
+  gain: number;
+  fee: number;
+  uf: number;
+  payed: number;
+  flag: number;
+  canExtend: false;
+  freeTrialInfo: string;
+  level: string;
+  encodeType: string;
+};

@@ -85,9 +85,15 @@ export default class Home extends React.Component<Props, State> {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const hotSearchList = await fetchSearchHotList();
-  const personalizedPlaylist = await fetchPersonalizedPlaylist();
-  const personalizedNewSong = await fetchPersonalizedNewSongs();
+  const [
+    hotSearchList,
+    personalizedPlaylist,
+    personalizedNewSong
+  ] = await Promise.all([
+    fetchSearchHotList(),
+    fetchPersonalizedPlaylist(),
+    fetchPersonalizedNewSongs()
+  ]);
   return {
     props: {
       hotSearchList,
