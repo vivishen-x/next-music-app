@@ -5,14 +5,18 @@ import {
   HotSearchListJson,
   fetchSearchHotList,
   PersonalizedPlaylistJson,
-  fetchPersonalizedPlaylist
+  fetchPersonalizedPlaylist,
+  PersonalizedNewSongJson,
+  fetchPersonalizedNewSongs
 } from "../src/musicApi";
 import SearchKeywordLabel from "../components/SearchKeywordLabel";
 import PlaylistsShow from "../components/PlaylistsShow";
+import SongsShow from "../components/SongsShow";
 
 type Props = {
   hotSearchList: HotSearchListJson;
   personalizedPlaylist: PersonalizedPlaylistJson;
+  personalizedNewSong: PersonalizedNewSongJson;
 };
 
 type State = {};
@@ -27,7 +31,11 @@ export default class Home extends React.Component<Props, State> {
   // }
 
   render() {
-    const { hotSearchList, personalizedPlaylist } = this.props;
+    const {
+      hotSearchList,
+      personalizedPlaylist,
+      personalizedNewSong
+    } = this.props;
 
     if (!hotSearchList)
       return (
@@ -51,7 +59,9 @@ export default class Home extends React.Component<Props, State> {
             <PlaylistsShow playlists={personalizedPlaylist.result} />
           </div>
           <h1 className="h1">最新音乐</h1>
-          <div className="top-recommend">Test Content</div>
+          <div className="top-recommend">
+            <SongsShow songs={personalizedNewSong.result} />
+          </div>
         </div>
         <style jsx>{`
           .container {
@@ -77,10 +87,12 @@ export default class Home extends React.Component<Props, State> {
 export const getStaticProps: GetStaticProps = async () => {
   const hotSearchList = await fetchSearchHotList();
   const personalizedPlaylist = await fetchPersonalizedPlaylist();
+  const personalizedNewSong = await fetchPersonalizedNewSongs();
   return {
     props: {
       hotSearchList,
-      personalizedPlaylist
+      personalizedPlaylist,
+      personalizedNewSong
     }
   };
 };

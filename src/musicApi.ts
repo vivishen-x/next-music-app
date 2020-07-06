@@ -2,7 +2,8 @@ import qs from "qs";
 import {
   SongInfoType,
   HotSearchType,
-  PlaylistType
+  PlaylistType,
+  SongDetailInfoType
 } from "./types/MusicInformationTypes";
 
 export type SearchResultJson = {
@@ -20,6 +21,10 @@ export type HotSearchListJson = {
 
 export type PersonalizedPlaylistJson = {
   result: PlaylistType[];
+};
+
+export type PersonalizedNewSongJson = {
+  result: SongDetailInfoType[];
 };
 
 // PORT = 8080
@@ -67,4 +72,16 @@ export async function fetchPersonalizedPlaylist(
       return null;
     });
   return personalizedPlayListJson;
+}
+
+export async function fetchPersonalizedNewSongs(): Promise<
+  PersonalizedNewSongJson
+> {
+  const personalizedNewSongUrl = `${personalizedApi}/newsong`;
+  const personalizedNewSongJson = await fetch(personalizedNewSongUrl)
+    .then(res => res.json())
+    .catch(e => {
+      return null;
+    });
+  return personalizedNewSongJson;
 }

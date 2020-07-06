@@ -11,7 +11,7 @@ export default function NowPlayingBar() {
             height: 0;
             bottom: 0;
             width: 100%;
-            padding-top: 90px;
+            /* padding-top: 90px; */
           }
           .now-playing-bar {
             height: 90px;
