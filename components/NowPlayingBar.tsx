@@ -1,8 +1,12 @@
+import AudioPlayer from "./AudioPlayer";
+
 export default function NowPlayingBar() {
+  const testSrc =
+    "http://m7.music.126.net/20200707222122/841819df5f0358067cefd698e8300d4a/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3";
   return (
     <div className="bottom-fix">
       <div className="now-playing-bar">
-        <div>player controllers</div>
+        <AudioPlayer src={testSrc} />
       </div>
       <style jsx>
         {`
