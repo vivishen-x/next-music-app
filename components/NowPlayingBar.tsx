@@ -1,36 +1,61 @@
+import * as React from "react";
 import AudioPlayer from "./AudioPlayer";
+import { fetchMusicPlayerUrlByIds } from "../src/musicApi";
+import { MusicPlayerDataType } from "../src/types/MusicInformationTypes";
 
-export default function NowPlayingBar() {
-  const testSrc =
-    "http://m7.music.126.net/20200707222122/841819df5f0358067cefd698e8300d4a/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3";
-  return (
-    <div className="bottom-fix">
-      <div className="now-playing-bar">
-        <AudioPlayer src={testSrc} />
+type Props = {
+  musicIds: number[];
+};
+
+type State = {
+  musicPlayerData: MusicPlayerDataType[];
+};
+
+export default class NowPlayingBar extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      musicPlayerData: []
+    };
+  }
+
+  async componentDidMount() {
+    const { musicIds } = this.props;
+    if (!musicIds) return;
+    const musicPlayerDataJson = await fetchMusicPlayerUrlByIds(musicIds);
+    this.setState({ musicPlayerData: musicPlayerDataJson.data });
+  }
+
+  render() {
+    const { musicPlayerData } = this.state;
+    return (
+      <div className="bottom-fix">
+        <div className="now-playing-bar">
+          <AudioPlayer musicData={musicPlayerData[0]} />
+        </div>
+        <style jsx>
+          {`
+            .bottom-fix {
+              position: sticky;
+              height: 0;
+              bottom: 0;
+              width: 100%;
+            }
+            .now-playing-bar {
+              height: 90px;
+              width: 100%;
+              position: fixed;
+              bottom: 0;
+              padding: 0 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #ffffff;
+              background: #333333;
+            }
+          `}
+        </style>
       </div>
-      <style jsx>
-        {`
-          .bottom-fix {
-            position: sticky;
-            height: 0;
-            bottom: 0;
-            width: 100%;
-            /* padding-top: 90px; */
-          }
-          .now-playing-bar {
-            height: 90px;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            background: #333333;
-          }
-        `}
-      </style>
-    </div>
-  );
+    );
+  }
 }

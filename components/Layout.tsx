@@ -32,7 +32,7 @@ export default function Layout({ children, meta }: Props) {
           <LeftNavMenu id={1} />
           <div className="main-view">{children}</div>
         </div>
-        <NowPlayingBar />
+        <NowPlayingBar musicIds={[1460626792]} />
       </main>
       <style jsx>{`
         .layout-body {
