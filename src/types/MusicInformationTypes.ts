@@ -60,7 +60,7 @@ export type PlaylistType = {
   alg: string;
 };
 
-export type SongDetailInfoType = {
+export type NewSongInfoType = {
   id: number;
   type: number;
   name: string;
@@ -129,6 +129,66 @@ export type SongDetailInfoType = {
     };
   };
   alg: string;
+};
+
+export type SongDetailInfoType = {
+  name: string;
+  id: number;
+  pst: number;
+  t: number;
+  ar: ArtistInfo[];
+  alia: string[];
+  pop: number;
+  st: number;
+  rt: string;
+  fee: number;
+  v: number;
+  crbt: null;
+  cf: string;
+  al: {
+    id: number;
+    name: string;
+    picUrl: string;
+    tns: string[];
+    pic: number;
+  };
+  dt: number;
+  h: MusicQuality;
+  m: MusicQuality;
+  l: MusicQuality;
+  a: null;
+  cd: string;
+  no: number;
+  rtUrl: null;
+  ftype: number;
+  rtUrls: [];
+  djId: number;
+  copyright: number;
+  s_id: number;
+  mark: number;
+  originCoverType: number;
+  single: number;
+  noCopyrightRcmd: null;
+  mv: number;
+  rtype: number;
+  rurl: null;
+  mst: number;
+  cp: number;
+  publishTime: number;
+};
+
+type ArtistInfo = {
+  id: number;
+  name: string;
+  tns: string[];
+  alias: string[];
+};
+
+type MusicQuality = {
+  br: number;
+  fid: number;
+  size: number;
+  vd: number;
 };
 
 type ArtistDetailInfoType = {

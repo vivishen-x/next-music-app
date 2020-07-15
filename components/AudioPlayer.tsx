@@ -147,7 +147,7 @@ export default class AudioPlayer extends React.Component<Props, State> {
         <style jsx>
           {`
             .container {
-              width: 50%;
+              width: 100%;
               max-width: 750px;
               display: flex;
               flex-direction: column;

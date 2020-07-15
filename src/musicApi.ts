@@ -3,8 +3,9 @@ import {
   SongInfoType,
   HotSearchType,
   PlaylistType,
-  SongDetailInfoType,
-  MusicPlayerDataType
+  NewSongInfoType,
+  MusicPlayerDataType,
+  SongDetailInfoType
 } from "./types/MusicInformationTypes";
 
 export type SearchResultJson = {
@@ -25,11 +26,15 @@ export type PersonalizedPlaylistJson = {
 };
 
 export type PersonalizedNewSongJson = {
-  result: SongDetailInfoType[];
+  result: NewSongInfoType[];
 };
 
 export type MusicPlayerDataJson = {
   data: MusicPlayerDataType[];
+};
+
+export type SongDetailDataJson = {
+  songs: SongDetailInfoType[];
 };
 
 // PORT = 8080
@@ -106,4 +111,19 @@ export async function fetchMusicPlayerUrlByIds(
       return null;
     });
   return musicPlayerDataJson;
+}
+
+export async function fetchSongDetailInfoByIds(
+  ids: number[]
+): Promise<SongDetailDataJson> {
+  const query = qs.stringify({
+    ids: ids.join(",")
+  });
+  const songDetailUrl = `${songApi}/detail?${query}`;
+  const songDetailDataJson = await fetch(songDetailUrl)
+    .then(res => res.json())
+    .catch(e => {
+      return null;
+    });
+  return songDetailDataJson;
 }

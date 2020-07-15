@@ -1,8 +1,8 @@
 import * as React from "react";
-import { SongDetailInfoType } from "../src/types/MusicInformationTypes";
+import { NewSongInfoType } from "../src/types/MusicInformationTypes";
 import { fetchMusicPlayerUrlByIds, MusicPlayerDataJson } from "../src/musicApi";
 
-type Props = { songs: SongDetailInfoType[] };
+type Props = { songs: NewSongInfoType[] };
 
 type State = {
   musicPlayerData: MusicPlayerDataJson;
