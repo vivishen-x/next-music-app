@@ -5,6 +5,7 @@ import LeftNavMenu from "./LeftNavMenu";
 
 type Props = {
   children: React.ReactNode;
+  playlistMusicIds?: number[];
   meta: {
     title?: string;
   };
@@ -12,7 +13,7 @@ type Props = {
 
 export const siteTitle = "云音乐";
 
-export default function Layout({ children, meta }: Props) {
+export default function Layout({ children, playlistMusicIds, meta }: Props) {
   const pageTitle = meta.title ? meta.title : siteTitle;
   return (
     <div style={{ height: "100%" }}>
@@ -32,7 +33,7 @@ export default function Layout({ children, meta }: Props) {
           <LeftNavMenu id={1} />
           <div className="main-view">{children}</div>
         </div>
-        <NowPlayingBar musicIds={[1460626792]} />
+        <NowPlayingBar playlistMusicIds={playlistMusicIds} />
       </main>
       <style jsx>{`
         .layout-body {

@@ -3,6 +3,7 @@ import { fetchMusicPlayerUrlByIds } from "../src/musicApi";
 import { MusicPlayerDataType } from "../src/types/MusicInformationTypes";
 
 type Props = {
+  updateNowPlayingMusic: Function;
   musicData: MusicPlayerDataType;
 };
 
@@ -45,6 +46,7 @@ export default class AudioPlayer extends React.Component<Props, State> {
     this.updateDuration = this.updateDuration.bind(this);
     this.updateCurrentTime = this.updateCurrentTime.bind(this);
     this.onClickUpdateCurrentTime = this.onClickUpdateCurrentTime.bind(this);
+    this.updatePlayingState = this.updatePlayingState.bind(this);
   }
 
   componentDidMount() {
@@ -85,6 +87,13 @@ export default class AudioPlayer extends React.Component<Props, State> {
     );
   }
 
+  updatePlayingState(key: "prev" | "next") {
+    this.props.updateNowPlayingMusic(key);
+    this.setState({
+      progressRate: 0
+    });
+  }
+
   componentWillUnmount() {
     this.audioRef.removeEventListener("durationchange", this.updateDuration);
     this.audioRef.removeEventListener("timeupdate", this.updateCurrentTime);
@@ -100,10 +109,14 @@ export default class AudioPlayer extends React.Component<Props, State> {
           ref={ref => {
             this.audioRef = ref;
           }}
+          autoPlay={isPlaying}
         ></audio>
         <div className="player-container">
-          <button className="button-wrapper">
-            <img alt="previous" src="./icons/skip_previous.svg" />
+          <button
+            className="button-wrapper"
+            onClick={() => this.updatePlayingState("prev")}
+          >
+            <img alt="prev" src="./icons/skip_previous.svg" />
           </button>
           <button
             className="button-wrapper button-wrapper--main"
@@ -115,7 +128,10 @@ export default class AudioPlayer extends React.Component<Props, State> {
               <img alt="play" src="./icons/play_circle.svg" />
             )}
           </button>
-          <button className="button-wrapper">
+          <button
+            className="button-wrapper"
+            onClick={() => this.updatePlayingState("next")}
+          >
             <img alt="next" src="./icons/skip_next.svg" />
           </button>
         </div>

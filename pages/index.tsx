@@ -37,6 +37,8 @@ export default class Home extends React.Component<Props, State> {
       personalizedNewSong
     } = this.props;
 
+    const playlistMusicIds = personalizedNewSong.result.map(song => song.id);
+
     if (!hotSearchList)
       return (
         <Layout meta={{}}>
@@ -46,7 +48,7 @@ export default class Home extends React.Component<Props, State> {
         </Layout>
       );
     return (
-      <Layout meta={{}}>
+      <Layout playlistMusicIds={playlistMusicIds} meta={{}}>
         <div className="container">
           <h1 className="h1">热门搜索</h1>
           <div className="top-recommend">

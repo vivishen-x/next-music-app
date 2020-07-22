@@ -10,12 +10,19 @@ import {
 } from "../src/types/MusicInformationTypes";
 
 type Props = {
-  musicIds: number[];
+  playlistMusicIds?: number[];
+  nowPlayingIndex?: number | null;
 };
 
 type State = {
   musicPlayerData: MusicPlayerDataType[];
   songDetailData: SongDetailInfoType[];
+  nowPlayingMusic: {
+    index: number;
+    id: number;
+    songDetail: SongDetailInfoType;
+    musicData: MusicPlayerDataType;
+  } | null;
 };
 
 export default class NowPlayingBar extends React.Component<Props, State> {
@@ -23,26 +30,101 @@ export default class NowPlayingBar extends React.Component<Props, State> {
     super(props);
     this.state = {
       musicPlayerData: [],
-      songDetailData: []
+      songDetailData: [],
+      nowPlayingMusic: null
     };
+
+    this.updateNowPlayingMusic = this.updateNowPlayingMusic.bind(this);
   }
 
   async componentDidMount() {
-    const { musicIds } = this.props;
-    if (!musicIds) return;
+    const { playlistMusicIds, nowPlayingIndex } = this.props;
+    if (!playlistMusicIds) return;
     const [musicPlayerDataJson, songDetailDataJson] = await Promise.all([
-      fetchMusicPlayerUrlByIds(musicIds),
-      fetchSongDetailInfoByIds(musicIds)
+      fetchMusicPlayerUrlByIds(playlistMusicIds),
+      fetchSongDetailInfoByIds(playlistMusicIds)
     ]);
+
+    const index = nowPlayingIndex ? nowPlayingIndex : 0;
+    const nowPlayingId = playlistMusicIds[index];
+    const songDetail = songDetailDataJson.songs.find(
+      song => song.id === nowPlayingId
+    );
+    const musicData = musicPlayerDataJson.data.find(
+      music => music.id === nowPlayingId
+    );
     this.setState({
       musicPlayerData: musicPlayerDataJson.data,
-      songDetailData: songDetailDataJson.songs
+      songDetailData: songDetailDataJson.songs,
+      nowPlayingMusic: {
+        index,
+        id: nowPlayingId,
+        songDetail,
+        musicData
+      }
     });
   }
 
+  updateNowPlayingMusic(key: "next" | "prev") {
+    const { playlistMusicIds } = this.props;
+    const { songDetailData, musicPlayerData } = this.state;
+    const nowPlayingIndex = this.updateNowPlayingIndex(key);
+
+    const nowPlayingId = playlistMusicIds[nowPlayingIndex];
+    const songDetail = songDetailData.find(song => song.id === nowPlayingId);
+    const musicData = musicPlayerData.find(music => music.id === nowPlayingId);
+
+    this.setState({
+      nowPlayingMusic: {
+        index: nowPlayingIndex,
+        id: nowPlayingId,
+        songDetail,
+        musicData
+      }
+    });
+  }
+
+  updateNowPlayingIndex(key: "next" | "prev"): number {
+    const { index } = this.state.nowPlayingMusic;
+    const totalLength = this.props.playlistMusicIds.length;
+    let nowPlayingIndex;
+    if (index > 0 && index < totalLength - 1) {
+      switch (key) {
+        case "next":
+          nowPlayingIndex = index + 1;
+          break;
+        case "prev":
+          nowPlayingIndex = index - 1;
+          break;
+      }
+    } else if (index == 0) {
+      switch (key) {
+        case "next":
+          nowPlayingIndex = index + 1;
+          break;
+        case "prev":
+          nowPlayingIndex = totalLength - 1;
+          break;
+      }
+    } else if (index == totalLength - 1) {
+      switch (key) {
+        case "next":
+          nowPlayingIndex = 0;
+          break;
+        case "prev":
+          nowPlayingIndex = index - 1;
+          break;
+      }
+    }
+    return nowPlayingIndex;
+  }
+
   render() {
-    const { musicPlayerData, songDetailData } = this.state;
-    const songDetail = songDetailData[0];
+    const { nowPlayingMusic } = this.state;
+    if (!nowPlayingMusic) return null;
+
+    const { songDetail, musicData } = nowPlayingMusic;
+
     return (
       <div className="bottom-fix">
         <div className="now-playing-bar__left">
@@ -63,7 +145,10 @@ export default class NowPlayingBar extends React.Component<Props, State> {
           ) : null}
         </div>
         <div className="now-playing-bar__center">
-          <AudioPlayer musicData={musicPlayerData[0]} />
+          <AudioPlayer
+            updateNowPlayingMusic={this.updateNowPlayingMusic}
+            musicData={musicData}
+          />
         </div>
         <div className="now-playing-bar__right"></div>
         <style jsx>
