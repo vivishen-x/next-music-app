@@ -1,5 +1,5 @@
-# next-music-app
-Self-practice Music Player Web Application *in development*
+# next-music-app [in development]
+Self-practice Music Player Web Application
 
 - Next.js Framework
 - React + Typescript
