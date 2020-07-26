@@ -1,9 +1,10 @@
+import Link from "next/link";
 import classNames from "classnames";
 
 const navItems = [
-  { id: 1, name: "首页" },
-  { id: 2, name: "新碟" },
-  { id: 3, name: "我的歌单" }
+  { id: 1, name: "首页", href: "/" },
+  { id: 2, name: "新碟", href: "/" },
+  { id: 3, name: "我的歌单", href: "/" }
 ];
 
 export default function LeftNavMenu({ id }: { id: number }) {
@@ -17,7 +18,9 @@ export default function LeftNavMenu({ id }: { id: number }) {
           });
           return (
             <div className={itemClass} key={navItem.id}>
-              {navItem.name}
+              <Link href={navItem.href}>
+                <a>{navItem.name}</a>
+              </Link>
             </div>
           );
         })}
