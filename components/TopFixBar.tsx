@@ -1,10 +1,12 @@
 import { siteTitle } from "./Layout";
+import SearchInputBox from "./SearchInputBox";
 
 export default function TopFixBar() {
   return (
     <div className="top-fix">
       <div className="top-fix-bar">
         <h1>{siteTitle}</h1>
+        <SearchInputBox />
       </div>
       <style jsx>
         {`
@@ -23,6 +25,7 @@ export default function TopFixBar() {
             padding: 0 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
           }
           .top-fix h1 {
             color: #ffffff;

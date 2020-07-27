@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 a:hover {
@@ -38,4 +39,8 @@ img {
 button {
   padding: 0;
   outline: 0;
+}
+
+input[type='search'] {
+  appearance: none;
 }

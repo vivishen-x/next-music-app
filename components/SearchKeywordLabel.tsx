@@ -1,7 +1,14 @@
+import Link from "next/link";
+
 export default function SearchKeywordLabel({ keyword }: { keyword: string }) {
+  const href = `/search/${keyword}`;
   return (
-    <span className="label-container">
-      {keyword}
+    <>
+      <Link href={href}>
+        <a>
+          <span className="label-container">{keyword}</span>
+        </a>
+      </Link>
       <style jsx>
         {`
           .label-container {
@@ -21,6 +28,6 @@ export default function SearchKeywordLabel({ keyword }: { keyword: string }) {
           }
         `}
       </style>
-    </span>
+    </>
   );
 }
