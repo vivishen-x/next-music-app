@@ -26,7 +26,7 @@ export default class SearchInputBox extends React.Component<Props, State> {
     const keywordsTrimmed = keywords.replace(/(^\s*)|(\s*$)/g, "");
     // Search when keywords are not empty
     if (keywordsTrimmed === "" || e.charCode != 13) return;
-    Router.push(`/search/${keywords}`).then(() => {
+    Router.push(`/search/${keywordsTrimmed}`).then(() => {
       window.scrollTo(0, 0);
     });
   }

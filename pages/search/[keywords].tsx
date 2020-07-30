@@ -22,7 +22,12 @@ export default class KeywordSearchShow extends React.Component<Props> {
           <h1 className="h1">「{keywords}」的搜索结果</h1>
           <div className="result-container">
             {searchResult.songs.map(song => (
-              <SongResultItem key={song.id} song={song} />
+              <SongResultItem
+                key={song.id}
+                songName={song.name}
+                artists={song.artists}
+                album={song.album}
+              />
             ))}
           </div>
         </div>

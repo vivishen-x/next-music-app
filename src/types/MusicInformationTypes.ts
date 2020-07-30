@@ -25,6 +25,9 @@ export type AlbumInfoType = {
   publishTime: number;
   size: number;
   status: number;
+  picUrl?: string;
+  tns?: string[];
+  pic?: number;
 };
 
 export type ArtistInfoType = {
@@ -37,6 +40,7 @@ export type ArtistInfoType = {
   picId: number;
   picUrl: string | null;
   trans: string | null;
+  tns?: string[] | null;
 };
 
 export type HotSearchType = {
@@ -136,7 +140,7 @@ export type SongDetailInfoType = {
   id: number;
   pst: number;
   t: number;
-  ar: ArtistInfo[];
+  ar: ArtistInfoType[];
   alia: string[];
   pop: number;
   st: number;
@@ -145,13 +149,14 @@ export type SongDetailInfoType = {
   v: number;
   crbt: null;
   cf: string;
-  al: {
-    id: number;
-    name: string;
-    picUrl: string;
-    tns: string[];
-    pic: number;
-  };
+  // al: {
+  //   id: number;
+  //   name: string;
+  //   picUrl: string;
+  //   tns: string[];
+  //   pic: number;
+  // };
+  al: AlbumInfoType;
   dt: number;
   h: MusicQuality;
   m: MusicQuality;
@@ -177,12 +182,12 @@ export type SongDetailInfoType = {
   publishTime: number;
 };
 
-type ArtistInfo = {
-  id: number;
-  name: string;
-  tns: string[];
-  alias: string[];
-};
+// type ArtistInfo = {
+//   id: number;
+//   name: string;
+//   tns: string[];
+//   alias: string[];
+// };
 
 type MusicQuality = {
   br: number;
@@ -272,8 +277,8 @@ export type PlaylistDetailType = {
     // subscribers: [];
     subscribed: boolean;
     // creator: {};
-    tracks: SongDetailInfoType[];
-    // trackIds: [];
+    tracks: SongDetailInfoType[]; // not complete
+    trackIds: SongTrackType[];
     updateFrequency: string | null;
     backgroundCoverId: number;
     backgroundCoverUrl: string | null;
@@ -307,4 +312,11 @@ export type PlaylistDetailType = {
     shareCount: number;
     commentCount: number;
   };
+};
+
+type SongTrackType = {
+  id: number;
+  v: number;
+  at: number;
+  alg: string | null;
 };

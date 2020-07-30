@@ -1,4 +1,5 @@
 import { PlaylistType } from "../src/types/MusicInformationTypes";
+import { Router } from "next/router";
 
 export default function PlaylistsShow({
   playlists
@@ -7,14 +8,22 @@ export default function PlaylistsShow({
 }) {
   return (
     <div className="container">
-      {playlists.map(playlist => (
-        <div className="playlist-container" key={playlist.id}>
-          <div className="img-container">
-            <img src={playlist.picUrl} alt={playlist.name} />
-          </div>
-          <div className="title-container">{playlist.name}</div>
-        </div>
-      ))}
+      {playlists.map(playlist => {
+        const href = `/playlist/${playlist.id}`;
+        return (
+          <a
+            className="playlist-container"
+            key={playlist.id}
+            role="button"
+            href={href}
+          >
+            <div className="img-container">
+              <img src={playlist.picUrl} alt={playlist.name} />
+            </div>
+            <div className="title-container">{playlist.name}</div>
+          </a>
+        );
+      })}
       <style jsx>{`
         .container {
           display: flex;
@@ -26,6 +35,7 @@ export default function PlaylistsShow({
           margin: 8px 0;
           padding-right: 16px;
           cursor: pointer;
+          display: block;
         }
         .playlist-container:hover .img-container img {
           filter: brightness(0.9);
