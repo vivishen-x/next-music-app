@@ -265,3 +265,46 @@ export type MusicPlayerDataType = {
   level: string;
   encodeType: string;
 };
+
+export type PlaylistDetailType = {
+  relatedVideos: null;
+  playlist: {
+    // subscribers: [];
+    subscribed: boolean;
+    // creator: {};
+    tracks: SongDetailInfoType[];
+    // trackIds: [];
+    updateFrequency: string | null;
+    backgroundCoverId: number;
+    backgroundCoverUrl: string | null;
+    titleImage: number;
+    titleImageUrl: string | null;
+    englishTitle: string | null;
+    opRecommend: boolean;
+    adType: number;
+    trackNumberUpdateTime: number;
+    subscribedCount: number;
+    cloudTrackCount: number;
+    userId: number;
+    createTime: number;
+    highQuality: boolean;
+    coverImgId: number;
+    newImported: boolean;
+    specialType: number;
+    updateTime: number;
+    commentThreadId: string;
+    coverImgUrl: string;
+    privacy: number;
+    trackUpdateTime: number;
+    trackCount: number;
+    playCount: number;
+    tags: string[];
+    description: string;
+    ordered: true;
+    status: number;
+    name: string;
+    id: number;
+    shareCount: number;
+    commentCount: number;
+  };
+};

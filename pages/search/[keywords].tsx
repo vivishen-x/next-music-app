@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useRouter } from "next/router";
-import { GetServerSideProps, NextPageContext } from "next";
+import { GetServerSideProps } from "next";
 import { SongInfoType } from "../../src/types/MusicInformationTypes";
 import { searchMusicByKeyword } from "../../src/musicApi";
 import Layout from "../../components/Layout";
