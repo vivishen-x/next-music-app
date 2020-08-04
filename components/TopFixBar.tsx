@@ -18,6 +18,7 @@ export default function TopFixBar() {
           .top-fix-bar {
             position: fixed;
             background: #d43c33;
+            z-index: 1000;
             top: 0;
             left: 0;
             width: 100%;

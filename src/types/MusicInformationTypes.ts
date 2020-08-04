@@ -320,3 +320,71 @@ type SongTrackType = {
   at: number;
   alg: string | null;
 };
+
+export type PlaylistCommentType = {
+  isMusician: boolean;
+  userId: number;
+  topComments: Comment[];
+  moreHot: boolean;
+  hotComments: Comment[];
+  commentBanner: string | null;
+  comments: Comment[];
+  total: number;
+  more: boolean;
+};
+
+export type Comment = {
+  user: UserInfo;
+  beReplied: Reply[];
+  pendantData: PendantData | null;
+  // showFloorComment: null;
+  status: number;
+  commentId: number;
+  content: string;
+  time: number;
+  likedCount: number;
+  expressionUrl: string | null;
+  commentLocationType: number;
+  parentCommentId: number;
+  decoration: {};
+  repliedMark: string | null;
+  liked: false;
+};
+
+type PendantData = {
+  id: number;
+  imageUrl: string;
+};
+
+type UserInfo = {
+  locationInfo: string | null;
+  liveInfo: string | null;
+  anonym: number;
+  avatarUrl: string;
+  authStatus: number;
+  experts: string | null;
+  userId: number;
+  userType: number;
+  nickname: string;
+  vipRights: VipRights | null;
+  vipType: number;
+  remarkName: string | null;
+  expertTags: string[] | null;
+};
+
+type VipRights = {
+  associator: {
+    vipCode: number;
+    rights: boolean;
+  };
+  musicPackage: null;
+  redVipAnnualCount: number;
+};
+
+type Reply = {
+  user: UserInfo;
+  beRepliedCommentId: number;
+  content: Comment;
+  status: number;
+  expressionUrl: string | null;
+};
