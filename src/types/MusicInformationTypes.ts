@@ -84,7 +84,7 @@ export type NewSongInfoType = {
     no: number;
     artists: ArtistDetailInfoType[];
     album: AlbumDetailInfoType;
-    starred: false;
+    starred: boolean;
     popularity: number;
     score: number;
     starredNum: number;
@@ -265,7 +265,7 @@ export type MusicPlayerDataType = {
   uf: number;
   payed: number;
   flag: number;
-  canExtend: false;
+  canExtend: boolean;
   freeTrialInfo: string;
   level: string;
   encodeType: string;
@@ -305,7 +305,7 @@ export type PlaylistDetailType = {
     playCount: number;
     tags: string[];
     description: string;
-    ordered: true;
+    ordered: boolean;
     status: number;
     name: string;
     id: number;
@@ -348,7 +348,7 @@ export type Comment = {
   parentCommentId: number;
   decoration: {};
   repliedMark: string | null;
-  liked: false;
+  liked: boolean;
 };
 
 type PendantData = {

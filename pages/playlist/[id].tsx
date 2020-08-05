@@ -1,21 +1,26 @@
 import { GetServerSideProps } from "next";
 import {
   fetchPlaylistDetailInfoById,
-  fetchSongDetailInfoByIds
+  fetchSongDetailInfoByIds,
+  fetchPlaylistCommentById
 } from "../../src/musicApi";
 import {
   PlaylistDetailType,
-  SongDetailInfoType
+  SongDetailInfoType,
+  PlaylistCommentType
 } from "../../src/types/MusicInformationTypes";
 import Layout from "../../components/Layout";
 import SongResultItem from "../../components/SongResultItem";
+import CommentShow from "../../components/Comment";
 
 export default function Playlist({
   playlistDetail,
-  songDetails
+  songDetails,
+  playlistComment
 }: {
   playlistDetail: PlaylistDetailType;
   songDetails: SongDetailInfoType[];
+  playlistComment: PlaylistCommentType;
 }) {
   const { playlist } = playlistDetail;
   return (
@@ -41,6 +46,14 @@ export default function Playlist({
           />
         ))}
       </div>
+      <div className="playlist-comments-container">
+        <h2>评论区 ({playlistComment.comments.length})</h2>
+        <div className="comments-container">
+          {playlistComment.comments.map(comment => (
+            <CommentShow key={comment.commentId} comment={comment} />
+          ))}
+        </div>
+      </div>
       <style jsx>
         {`
           .playlist-header {
@@ -62,6 +75,9 @@ export default function Playlist({
           .playlist-tracks {
             margin: 10px 0 50px;
           }
+          .comments-container {
+            margin: 10px 0 50px;
+          }
         `}
       </style>
     </Layout>
@@ -70,14 +86,18 @@ export default function Playlist({
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.query as { id: string };
-  const playlistDetail = await fetchPlaylistDetailInfoById(id);
+  const [playlistDetail, playlistComment] = await Promise.all([
+    fetchPlaylistDetailInfoById(id),
+    fetchPlaylistCommentById(id)
+  ]);
 
   const trackIds = playlistDetail.playlist.trackIds.map(trackId => trackId.id);
   const songDetailDataJson = await fetchSongDetailInfoByIds(trackIds);
   return {
     props: {
       playlistDetail,
-      songDetails: songDetailDataJson.songs
+      songDetails: songDetailDataJson.songs,
+      playlistComment
     }
   };
 };

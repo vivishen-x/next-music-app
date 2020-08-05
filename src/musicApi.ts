@@ -6,7 +6,8 @@ import {
   NewSongInfoType,
   MusicPlayerDataType,
   SongDetailInfoType,
-  PlaylistDetailType
+  PlaylistDetailType,
+  PlaylistCommentType
 } from "./types/MusicInformationTypes";
 
 export type SearchResultJson = {
@@ -48,6 +49,8 @@ const personalizedApi = `${NETEASE_MUSIC_URI}personalized`;
 const songApi = `${NETEASE_MUSIC_URI}song`;
 
 const playlistApi = `${NETEASE_MUSIC_URI}playlist`;
+
+const commentApi = `${NETEASE_MUSIC_URI}comment`;
 
 export async function searchMusicByKeyword(
   keywords: string
@@ -142,4 +145,17 @@ export async function fetchPlaylistDetailInfoById(
       return null;
     });
   return playlistDetailDataJson;
+}
+
+export async function fetchPlaylistCommentById(
+  id: string
+): Promise<PlaylistCommentType> {
+  const query = qs.stringify({ id });
+  const playlistCommentUrl = `${commentApi}/playlist?${query}`;
+  const playlistCommentJson = await fetch(playlistCommentUrl)
+    .then(res => res.json())
+    .catch(e => {
+      return null;
+    });
+  return playlistCommentJson;
 }
