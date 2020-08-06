@@ -39,6 +39,8 @@ export default class SongsShow extends React.Component<Props, State> {
           const artistName = song.song.artists
             .map(artist => artist.name)
             .join(" & ");
+          const description =
+            song.song.alias.length >= 1 ? `(${song.song.alias.join()})` : "";
           return (
             <div
               className="song-container"
@@ -48,8 +50,13 @@ export default class SongsShow extends React.Component<Props, State> {
               <div className="img-container">
                 <img src={song.picUrl} alt={song.name} />
               </div>
-              <div className="title-container">{song.name}</div>
-              <div className="name-container">{artistName}</div>
+              <div className="text-container">
+                <div className="title-container">
+                  {song.name}
+                  <span className="des-container">{description}</span>
+                </div>
+                <div className="name-container">{artistName}</div>
+              </div>
             </div>
           );
         })}
@@ -71,15 +78,19 @@ export default class SongsShow extends React.Component<Props, State> {
           .img-container img {
             border-radius: 5px;
           }
+          .text-container {
+            padding: 3px 8px;
+          }
           .title-container {
             margin-top: 10px;
-            padding: 3px 8px;
             color: #333333;
           }
-          .name-container {
-            padding: 3px 8px;
+          .des-container {
             color: #777777;
-            font-size: 12px;
+          }
+          .name-container {
+            color: #777777;
+            font-size: 11px;
           }
         `}</style>
       </div>
